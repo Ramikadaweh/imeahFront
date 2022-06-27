@@ -35,9 +35,9 @@
     "tasks":"Tasks",
 
     "dashboard":"Dashboard",
-    "user":"User",
-    "product":"Product",
-    "blog":"Blog",
+    "user":"users",
+    "doctor":"doctors",
+    "message":"messages",
     "notFound":"Not found",
 
     "fstnmReq":"First name required",

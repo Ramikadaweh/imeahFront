@@ -99,12 +99,12 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
     icon: getIcon('eva:people-fill'),
   },
   {
-    title: t("product"),
+    title: t("doctor"),
     path: '/dashboard/products',
     icon: getIcon('eva:shopping-bag-fill'),
   },
   {
-    title: t("blog"),
+    title: t("message"),
     path: '/dashboard/blog',
     icon: getIcon('eva:file-text-fill'),
   },

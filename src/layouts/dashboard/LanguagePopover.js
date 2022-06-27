@@ -4,8 +4,8 @@ import { Box, IconButton, MenuItem, Stack } from '@mui/material';
 import { alpha } from '@mui/material/styles';
 // components
 import i18next from 'i18next';
-import Cookies from 'js-cookie';
-import { useEffect, useRef, useState } from 'react';
+// import Cookies from 'js-cookie';
+import { useRef, useState } from 'react';
 import MenuPopover from '../../components/MenuPopover';
 
 // ----------------------------------------------------------------------
@@ -22,7 +22,7 @@ const LANGS = [
     icon: '/static/icons/ic_flag_de.svg',
   },
   {
-    value: 'fr',
+    value: 'fr-FR',
     label: 'French',
     icon: '/static/icons/ic_flag_fr.svg',
   },
@@ -42,17 +42,19 @@ export default function LanguagePopover() {
     setOpen(false);
   };
 
-  useEffect(() => {
-    const navigator = window?.navigator;
-    let lang = Cookies.get('i18next');
+  // useEffect(() => {
+  
+  //   // let lang = Cookies.get('i18next');
+  //   // if (lang) return;
+    
 
-    if (lang) return;
-    if (navigator?.languages && navigator?.languages.length) lang = navigator?.languages[0];
-    else lang = navigator?.language;
+  //   // if (window.navigator.languages && window.navigator.languages.length) lang = window.navigator.languages[0];
+  //   const lang = window.navigator.language;
 
-    Cookies.set('i18next', lang);
-  }, []);
+  //   Cookies.set('i18next', lang);
+  // }, []);
 
+  
   return (
     <>
       <IconButton

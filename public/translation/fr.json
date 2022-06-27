@@ -36,8 +36,8 @@
 
     "dashboard":"tableau de bord",
     "user":"utilisateur",
-    "product":"produit",
-    "blog":"blog",
+    "doctor":"médecins",
+    "message":"message",
     "notFound":"Pas trouvé",
 
     "fstnmReq":"nom obligatoire",
