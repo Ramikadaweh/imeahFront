@@ -1,9 +1,13 @@
 import { Link as RouterLink } from 'react-router-dom';
+import { useEffect } from 'react';
+
 // @mui
 import { styled } from '@mui/material/styles';
 import { Card, Link, Container, Typography } from '@mui/material';
 // hooks
 import { useTranslation } from 'react-i18next';
+import { useCookies } from 'react-cookie';
+
 
 import useResponsive from '../hooks/useResponsive';
 // components
@@ -64,6 +68,11 @@ export default function Login() {
   const smUp = useResponsive('up', 'sm');
 
   const mdUp = useResponsive('up', 'md');
+
+  const [cookies, setCookie] = useCookies(['i18next']);
+  useEffect(() => {
+   setCookie('i18next', window.navigator.language);
+ }, []);
 
   return (
     <Page title="Login">
