@@ -3,10 +3,11 @@ import { Link as RouterLink } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { Card, Link, Container, Typography } from '@mui/material';
 // hooks
+import { useTranslation } from 'react-i18next';
+
 import useResponsive from '../hooks/useResponsive';
 // components
 import Page from '../components/Page';
-import Logo from '../components/Logo';
 // sections
 import { LoginForm } from '../sections/auth/login';
 import AuthSocial from '../sections/auth/AuthSocial';
@@ -57,6 +58,9 @@ const ContentStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function Login() {
+
+  const {t} = useTranslation()
+
   const smUp = useResponsive('up', 'sm');
 
   const mdUp = useResponsive('up', 'md');
@@ -69,9 +73,9 @@ export default function Login() {
 
           {smUp && (
             <Typography variant="body2" sx={{ mt: { md: -2 } }}>
-              Don’t have an account? {''}
+              {t('noAccount')} {''}
               <Link variant="subtitle2" component={RouterLink} to="/register">
-                Get started
+                {t('getStartedd')}
               </Link>
             </Typography>
           )}
@@ -80,7 +84,7 @@ export default function Login() {
         {mdUp && (
           <SectionStyle>
             <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-              Hi, Welcome Back
+              {t('welcomeBack')}
             </Typography>
             <img src="https://media.istockphoto.com/photos/modern-hospital-building-picture-id1312706413?k=20&m=1312706413&s=170667a&w=0&h=NpGueAN1ZlNEIc2OEBcs7V-nOP2s8veEqy29HPSYeEQ=" alt="login" />
           </SectionStyle>
@@ -89,10 +93,10 @@ export default function Login() {
         <Container maxWidth="sm">
           <ContentStyle>
             <Typography variant="h4" gutterBottom>
-              Sign in to Minimal
+              {t('signIn')}
             </Typography>
 
-            <Typography sx={{ color: 'text.secondary', mb: 5 }}>Enter your details below.</Typography>
+            <Typography sx={{ color: 'text.secondary', mb: 5 }}>{t('enterDetail')}</Typography>
 
             <AuthSocial />
 
@@ -100,9 +104,9 @@ export default function Login() {
 
             {!smUp && (
               <Typography variant="body2" align="center" sx={{ mt: 3 }}>
-                Don’t have an account?{' '}
+                {t('noAccount')}{' '}
                 <Link variant="subtitle2" component={RouterLink} to="/register">
-                  Get started
+                  {t('getStartedd')}
                 </Link>
               </Typography>
             )}

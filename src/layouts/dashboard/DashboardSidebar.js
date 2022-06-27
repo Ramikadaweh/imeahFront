@@ -1,9 +1,13 @@
 import PropTypes from 'prop-types';
+
 import { useEffect } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
 import { Box, Link, Button, Drawer, Typography, Avatar, Stack } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import Iconify from '../../components/Iconify';
+
 // mock
 import account from '../../_mock/account';
 // hooks
@@ -13,11 +17,12 @@ import Logo from '../../components/Logo';
 import Scrollbar from '../../components/Scrollbar';
 import NavSection from '../../components/NavSection';
 //
-import navConfig from './NavConfig';
 
 // ----------------------------------------------------------------------
 
 const DRAWER_WIDTH = 280;
+
+const getIcon = (name) => <Iconify icon={name} width={22} height={22} />;
 
 const RootStyle = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('lg')]: {
@@ -42,6 +47,8 @@ DashboardSidebar.propTypes = {
 };
 
 export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
+
+  const {t}=useTranslation();
   const { pathname } = useLocation();
 
   const isDesktop = useResponsive('up', 'lg');
@@ -80,7 +87,43 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         </Link>
       </Box>
 
-      <NavSection navConfig={navConfig} />
+      <NavSection navConfig={[
+  {
+    title: t("dashboard"),
+    path: '/dashboard/app',
+    icon: getIcon('eva:pie-chart-2-fill'),
+  },
+  {
+    title: t("user"),
+    path: '/dashboard/user',
+    icon: getIcon('eva:people-fill'),
+  },
+  {
+    title: t("product"),
+    path: '/dashboard/products',
+    icon: getIcon('eva:shopping-bag-fill'),
+  },
+  {
+    title: t("blog"),
+    path: '/dashboard/blog',
+    icon: getIcon('eva:file-text-fill'),
+  },
+  {
+    title: t("loginn"),
+    path: '/login',
+    icon: getIcon('eva:lock-fill'),
+  },
+  {
+    title: t("register"),
+    path: '/register',
+    icon: getIcon('eva:person-add-fill'),
+  },
+  {
+    title: t("notFound"),
+    path: '/404',
+    icon: getIcon('eva:alert-triangle-fill'),
+  },
+]} />
 
       <Box sx={{ flexGrow: 1 }} />
 

@@ -1,0 +1,51 @@
+{
+    "login":"Vous avez déjà un compte ?",
+    "manage":"Gérez plus efficacement le travail avec E-Healthpro",
+    "getStarted":"Commencez tout à fait gratuitement.",
+    "free":"Libre pour toujours. Aucune carte de crédit nécessaire.",
+    "byRegistering":"En m'inscrivant, j'accepte Minimal",
+    "terms":"Conditions d'utilisation",
+    "privacy":"Politique de confidentialité",
+    "email":"Adresse e-mail",
+    "firstname":"nom",
+    "lastname":"prenom",
+    "password":"mot de pass",
+    "register":"S'inscriree",
+
+    "noAccount":"Vous n'avez pas de compte ?",
+    "getStartedd":"commencer",
+    "welcomeBack":"Salut, bienvenue à nouveau",
+    "signIn":"Connectez-vous à Minimal",
+    "enterDetail":"Entrez vos coordonnées ci-dessous.",
+    "rememberMe":"Souviens-toi de moi",
+    "forgotP":"mot de passe oublié?",
+    "loginn":"connection",
+
+    "weekSl":"Ventes hebdomadaires",
+    "newUsr":"Nouveaux utilisateurs",
+    "itemOr":"Commandes d'articles",
+    "bugRep":"Rapports de bogues",
+    "websiteVis":"Visites du site Web",
+    "currentVis":"Visites en cours",
+    "conversR":"Taux de conversion",
+    "currentSub":"Sujet actuel",
+    "newUp":"Mise à jour des nouvelles",
+    "orderTi":"Délai de commande",
+    "trafficSide":"Trafic par site",
+    "tasks":"Tâches",
+
+    "dashboard":"tableau de bord",
+    "user":"utilisateur",
+    "product":"produit",
+    "blog":"blog",
+    "notFound":"Pas trouvé",
+
+    "fstnmReq":"nom obligatoire",
+    "lstnmReq":"Prénom obligatoire",
+    "validEml":"L'e-mail doit être une adresse e-mail valide",
+    "emailReq":"L'e-mail est requis",
+    "pwdReq":"Mot de passe requis"
+
+
+
+}

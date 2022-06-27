@@ -1,8 +1,11 @@
-import { useRef, useState } from 'react';
+import LanguageIcon from '@mui/icons-material/Language';
+import { Box, IconButton, MenuItem, Stack } from '@mui/material';
 // material
 import { alpha } from '@mui/material/styles';
-import { Box, MenuItem, Stack, IconButton } from '@mui/material';
 // components
+import i18next from 'i18next';
+import Cookies from 'js-cookie';
+import { useEffect, useRef, useState } from 'react';
 import MenuPopover from '../../components/MenuPopover';
 
 // ----------------------------------------------------------------------
@@ -39,6 +42,17 @@ export default function LanguagePopover() {
     setOpen(false);
   };
 
+  useEffect(() => {
+    const navigator = window?.navigator;
+    let lang = Cookies.get('i18next');
+
+    if (lang) return;
+    if (navigator?.languages && navigator?.languages.length) lang = navigator?.languages[0];
+    else lang = navigator?.language;
+
+    Cookies.set('i18next', lang);
+  }, []);
+
   return (
     <>
       <IconButton
@@ -53,7 +67,7 @@ export default function LanguagePopover() {
           }),
         }}
       >
-        <img src={LANGS[0].icon} alt={LANGS[0].label} />
+        <LanguageIcon alt={LANGS[0].label} />
       </IconButton>
 
       <MenuPopover
@@ -69,7 +83,11 @@ export default function LanguagePopover() {
       >
         <Stack spacing={0.75}>
           {LANGS.map((option) => (
-            <MenuItem key={option.value} selected={option.value === LANGS[0].value} onClick={() => handleClose()}>
+            <MenuItem
+              key={option.value}
+              selected={option.value === LANGS[0].value}
+              onClick={() => i18next.changeLanguage(option.value)}
+            >
               <Box component="img" alt={option.label} src={option.icon} sx={{ width: 28, mr: 2 }} />
 
               {option.label}
