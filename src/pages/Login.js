@@ -14,7 +14,6 @@ import useResponsive from '../hooks/useResponsive';
 import Page from '../components/Page';
 // sections
 import { LoginForm } from '../sections/auth/login';
-import AuthSocial from '../sections/auth/AuthSocial';
 import lg from '../images/Logo.png'
 // ----------------------------------------------------------------------
 
@@ -106,8 +105,6 @@ export default function Login() {
             </Typography>
 
             <Typography sx={{ color: 'text.secondary', mb: 5 }}>{t('enterDetail')}</Typography>
-
-            <AuthSocial />
 
             <LoginForm />
 

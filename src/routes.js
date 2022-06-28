@@ -16,13 +16,12 @@ import DashboardApp from './pages/DashboardApp';
 export default function Router() {
   return useRoutes([
     {
-      path: '/dashboard',
-      element: <DashboardLayout />,
+      path: '/dashboard',  element: localStorage.getItem('token') ? <DashboardLayout /> : <Navigate to="/" />,
       children: [
         { path: 'app', element: <DashboardApp /> },
         { path: 'user', element: <User /> },
-        { path: 'products', element: <Products /> },
-        { path: 'blog', element: <Blog /> },
+        { path: 'doctors', element: <Products /> },
+        { path: 'hospitals', element: <Blog /> },
       ],
     },
     {

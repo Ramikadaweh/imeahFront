@@ -1,6 +1,6 @@
 import { filter } from 'lodash';
 import { sentenceCase } from 'change-case';
-import {  useState } from 'react';
+import {  useEffect, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 // material
 import {
@@ -19,6 +19,7 @@ import {
   TablePagination,
 } from '@mui/material';
 // components
+import axios from 'axios';
 import Page from '../components/Page';
 import Label from '../components/Label';
 import Scrollbar from '../components/Scrollbar';
@@ -36,7 +37,7 @@ const TABLE_HEAD = [
   { id: 'lastname', label: 'Last Name', alignRight: false },
   { id: 'email', label: 'Email', alignRight: false },
   // { id: 'isVerified', label: 'Verified', alignRight: false },
-  { id: 'status', label: 'Status', alignRight: false },
+  // { id: 'status', label: 'Status', alignRight: false },
   { id: '' },
 ];
 
@@ -73,10 +74,21 @@ function applySortFilter(array, comparator, query) {
 
 export default function User() {
 
-  // const [firstname, setFirstname] = useState('');
-  // const [lastname, setLastname] = useState('');
-  // const [email, setEmail] = useState('');
+  const [user, setUser] = useState([]);
+  
 
+  useEffect(()=>{
+    axios
+    .get('http://localhost:5003/users/all')
+    .then((response) => {
+      const userData = response.data;
+      console.log(userData);
+      setUser(userData);
+    })
+    .catch((err) => console.log(err));
+  },[])
+    
+  
   
 
   const [page, setPage] = useState(0);
@@ -168,11 +180,12 @@ export default function User() {
                   onSelectAllClick={handleSelectAllClick}
                 />
                 <TableBody>
-                  {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, name, role, status, company, avatarUrl } = row;
-                    const isItemSelected = selected.indexOf(name) !== -1;
+                  {user.map((row) => {
+                    const { id, firstname, lastname, email } = row;
+                    const isItemSelected = selected.indexOf(firstname) !== -1;
 
                     return (
+                      
                       <TableRow
                         hover
                         key={id}
@@ -182,29 +195,29 @@ export default function User() {
                         aria-checked={isItemSelected}
                       >
                         <TableCell padding="checkbox">
-                          <Checkbox checked={isItemSelected} onChange={(event) => handleClick(event, name)} />
+                          <Checkbox checked={isItemSelected} onChange={(event) => handleClick(event, firstname)} />
                         </TableCell>
-                        <TableCell component="th" scope="row" padding="none">
+                        <TableCell component="th" scope="row" padding="none" style={{paddingLeft:'3%'}}>
                           <Stack direction="row" alignItems="center" spacing={2}>
-                            <Avatar alt={name} src={avatarUrl} />
-                            <Typography variant="subtitle2" noWrap>
-                              {name}
+                            {/* <Avatar alt={name} src={avatarUrl} /> */}
+                            <Typography  variant="subtitle2" noWrap>
+                              {firstname}
                             </Typography>
                           </Stack>
                         </TableCell>
-                        <TableCell align="left">{company}</TableCell>
-                        <TableCell align="left">{role}</TableCell>
-                        <TableCell align="left">
+                        <TableCell style={{paddingLeft:'2.5%'}} align="left">{lastname}</TableCell>
+                        <TableCell align="left">{email}</TableCell>
+                        {/* <TableCell align="left">
                           <Label variant="ghost" color={(status === 'banned' && 'error') || 'success'}>
                             {sentenceCase(status)}
                           </Label>
-                        </TableCell>
+                        </TableCell> */}
 
                         <TableCell align="right">
                           <UserMoreMenu />
                         </TableCell>
                       </TableRow>
-                    );
+                    ); 
                   })}
                   {emptyRows > 0 && (
                     <TableRow style={{ height: 53 * emptyRows }}>

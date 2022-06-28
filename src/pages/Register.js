@@ -13,7 +13,6 @@ import '../i18n';
 import Page from '../components/Page';
 // sections
 import { RegisterForm } from '../sections/auth/register';
-import AuthSocial from '../sections/auth/AuthSocial';
 import lg from '../images/Logo.png'
 
 
@@ -109,8 +108,6 @@ export default function Register() {
             </Typography>
 
             <Typography sx={{ color: 'text.secondary', mb: 5 }}>{t('free')}</Typography>
-
-            <AuthSocial />
 
             <RegisterForm />
 

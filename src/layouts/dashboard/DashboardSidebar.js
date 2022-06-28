@@ -13,7 +13,7 @@ import account from '../../_mock/account';
 // hooks
 import useResponsive from '../../hooks/useResponsive';
 // components
-import Logo from '../../components/Logo';
+import logo from '../../images/Logo.png';
 import Scrollbar from '../../components/Scrollbar';
 import NavSection from '../../components/NavSection';
 //
@@ -68,7 +68,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
       }}
     >
       <Box sx={{ px: 2.5, py: 3, display: 'inline-flex' }}>
-        <Logo />
+        <img src={logo} alt='' style={{width:150}}/>
       </Box>
 
       <Box sx={{ mb: 5, mx: 2.5 }}>
@@ -100,12 +100,22 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
   },
   {
     title: t("doctor"),
-    path: '/dashboard/products',
+    path: '/dashboard/doctors',
     icon: getIcon('eva:shopping-bag-fill'),
   },
   {
-    title: t("message"),
-    path: '/dashboard/blog',
+    title: t("hospitales"),
+    path: '/dashboard/hospitals',
+    icon: getIcon('eva:shopping-bag-fill'),
+  },
+  {
+    title: t("cases"),
+    path: '',
+    icon: getIcon('eva:shopping-bag-fill'),
+  },
+  {
+    title: t("messages"),
+    path: '',
     icon: getIcon('eva:file-text-fill'),
   },
   {

@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker';
+// import { faker } from '@faker-js/faker';
 // @mui
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
@@ -6,16 +6,16 @@ import { Grid, Container, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 import Page from '../components/Page';
-import Iconify from '../components/Iconify';
+// import Iconify from '../components/Iconify';
 
 // sections
 import {
-  AppTasks,
-  AppNewsUpdate,
-  AppOrderTimeline,
+  // AppTasks,
+  // AppNewsUpdate,
+  // AppOrderTimeline,
   AppCurrentVisits,
   AppWebsiteVisits,
-  AppTrafficBySite,
+  // AppTrafficBySite,
   AppWidgetSummary,
   AppCurrentSubject,
   AppConversionRates,
@@ -132,7 +132,7 @@ export default function DashboardApp() {
           <Grid item xs={12} md={6} lg={4}>
             <AppCurrentSubject
               title={t('currentSub')}
-              chartLabels={['English', 'History', 'Physics', 'Geography', 'Chinese', 'Math']}
+              chartLabels={['Oxygen', 'Aspirine', 'Hydrocortisone', 'Bronchodilator', 'Nitroglycren', 'Glucagon']}
               chartData={[
                 { name: 'Series 1', data: [80, 50, 30, 40, 100, 20] },
                 { name: 'Series 2', data: [20, 30, 40, 80, 20, 80] },
@@ -142,7 +142,7 @@ export default function DashboardApp() {
             />
           </Grid>
 
-          <Grid item xs={12} md={6} lg={8}>
+          {/* <Grid item xs={12} md={6} lg={8}>
             <AppNewsUpdate
               title={t('newUp')}
               list={[...Array(5)].map((_, index) => ({
@@ -212,7 +212,7 @@ export default function DashboardApp() {
                 { id: '5', label: 'Sprint Showcase' },
               ]}
             />
-          </Grid>
+          </Grid> */}
         </Grid>
       </Container>
     </Page>

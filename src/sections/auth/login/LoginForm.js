@@ -9,7 +9,6 @@ import { LoadingButton } from '@mui/lab';
 // component
 import { useTranslation } from 'react-i18next';
 
-
 import Iconify from '../../../components/Iconify';
 
 // ----------------------------------------------------------------------
@@ -39,6 +38,7 @@ export default function LoginForm() {
         .post('http://a63b8a6ee7175471684500510268d66b-571633740.me-south-1.elb.amazonaws.com:5001/user/login', values)
         .then((response) => {
           console.log(response);
+          localStorage.setItem('token', response.data);
           if (response.status === 200 || response.status === 201) navigate('/dashboard/app');
         })
         .catch((error) => {
