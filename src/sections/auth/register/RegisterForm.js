@@ -1,6 +1,8 @@
 import * as Yup from 'yup';
 import { useState } from 'react';
 import { useFormik, Form, FormikProvider } from 'formik';
+import { useNavigate } from 'react-router-dom';
+
 import axios from 'axios';
 import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
@@ -8,7 +10,8 @@ import { useTranslation } from 'react-i18next';
 import Iconify from '../../../components/Iconify';
 
 export default function RegisterForm() {
-  const {t}=useTranslation();
+  const { t } = useTranslation();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const formik = useFormik({
     initialValues: {
@@ -23,12 +26,13 @@ export default function RegisterForm() {
       email: Yup.string().email(t('validEml')).required(t('emailReq')),
       hpassword: Yup.string().required(t('pwdReq')),
     }),
-    onSubmit: values => {
-      values.localCode = window.navigator.language;
+    onSubmit: (values) => {
+      values.locale_code = window.navigator.language;
       axios
-        .post("http://a63b8a6ee7175471684500510268d66b-571633740.me-south-1.elb.amazonaws.com:5001/user/signup", values)
+        .post('http://a63b8a6ee7175471684500510268d66b-571633740.me-south-1.elb.amazonaws.com:5001/user/signup', values)
         .then((response) => {
           console.log(response);
+          if (response.status === 200 || response.status === 201) navigate('/login');
         })
         .catch((err) => {
           console.log(err);
@@ -100,20 +104,10 @@ export default function RegisterForm() {
             helperText={touched.hpassword && errors.hpassword}
           />
           <LoadingButton fullWidth size="large" type="submit" variant="contained">
-          {t('register')}
+            {t('register')}
           </LoadingButton>
         </Stack>
       </Form>
-    </FormikProvider >
+    </FormikProvider>
   );
 }
-
-
-
-
-
-
-
-
-
-

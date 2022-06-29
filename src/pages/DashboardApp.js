@@ -4,6 +4,7 @@ import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
 // components
 import { useTranslation } from 'react-i18next';
+import { useLocation } from "react-router-dom";
 
 import Page from '../components/Page';
 // import Iconify from '../components/Iconify';
@@ -27,6 +28,9 @@ export default function DashboardApp() {
   const { t } = useTranslation();
 
   const theme = useTheme();
+
+  // const {id} = useLocation().state.id;
+  // console.log(`${id}`);
 
   return (
     <Page title="Dashboard">

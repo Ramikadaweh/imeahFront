@@ -1,13 +1,15 @@
 import { filter } from 'lodash';
-import { sentenceCase } from 'change-case';
-import {  useEffect, useState } from 'react';
+// import { sentenceCase } from 'change-case';
+import { useEffect, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 // material
 import {
   Card,
   Table,
   Stack,
-  Avatar,
+  // Avatar,
   Button,
   Checkbox,
   TableRow,
@@ -20,12 +22,13 @@ import {
 } from '@mui/material';
 // components
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 import Page from '../components/Page';
-import Label from '../components/Label';
+// import Label from '../components/Label';
 import Scrollbar from '../components/Scrollbar';
 import Iconify from '../components/Iconify';
 import SearchNotFound from '../components/SearchNotFound';
-import { UserListHead, UserListToolbar, UserMoreMenu } from '../sections/@dashboard/user';
+import { UserListHead, UserListToolbar } from '../sections/@dashboard/user';
 // mock
 import USERLIST from '../_mock/user';
 // import axios from 'axios';
@@ -73,23 +76,30 @@ function applySortFilter(array, comparator, query) {
 }
 
 export default function User() {
-
+  const { t } = useTranslation();
   const [user, setUser] = useState([]);
-  
 
-  useEffect(()=>{
+  useEffect(() => {
     axios
-    .get('http://localhost:5003/users/all')
-    .then((response) => {
-      const userData = response.data;
-      console.log(userData);
-      setUser(userData);
-    })
-    .catch((err) => console.log(err));
-  },[])
-    
-  
-  
+      .get('http://a63b8a6ee7175471684500510268d66b-571633740.me-south-1.elb.amazonaws.com:5001/users/all')
+      .then((response) => {
+        const userData = response.data;
+        console.log(userData);
+        setUser(userData);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  const deleteUser = (id) => {
+    console.log(id);
+    axios
+      .delete(`http://a63b8a6ee7175471684500510268d66b-571633740.me-south-1.elb.amazonaws.com:5001/users/${id}`)
+      .then((response) => {
+        console.log(response.data);
+        if (response.status === 200 || response.status === 201) window.location.reload();
+      });
+   
+  };
 
   const [page, setPage] = useState(0);
 
@@ -157,10 +167,10 @@ export default function User() {
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            User
+            {t('user')}
           </Typography>
           <Button variant="contained" component={RouterLink} to="#" startIcon={<Iconify icon="eva:plus-fill" />}>
-            New User
+            {t('newUsr')}
           </Button>
         </Stack>
 
@@ -185,7 +195,6 @@ export default function User() {
                     const isItemSelected = selected.indexOf(firstname) !== -1;
 
                     return (
-                      
                       <TableRow
                         hover
                         key={id}
@@ -197,15 +206,17 @@ export default function User() {
                         <TableCell padding="checkbox">
                           <Checkbox checked={isItemSelected} onChange={(event) => handleClick(event, firstname)} />
                         </TableCell>
-                        <TableCell component="th" scope="row" padding="none" style={{paddingLeft:'3%'}}>
+                        <TableCell component="th" scope="row" padding="none" style={{ paddingLeft: '3%' }}>
                           <Stack direction="row" alignItems="center" spacing={2}>
                             {/* <Avatar alt={name} src={avatarUrl} /> */}
-                            <Typography  variant="subtitle2" noWrap>
+                            <Typography variant="subtitle2" noWrap>
                               {firstname}
                             </Typography>
                           </Stack>
                         </TableCell>
-                        <TableCell style={{paddingLeft:'2.5%'}} align="left">{lastname}</TableCell>
+                        <TableCell style={{ paddingLeft: '2.5%' }} align="left">
+                          {lastname}
+                        </TableCell>
                         <TableCell align="left">{email}</TableCell>
                         {/* <TableCell align="left">
                           <Label variant="ghost" color={(status === 'banned' && 'error') || 'success'}>
@@ -214,10 +225,10 @@ export default function User() {
                         </TableCell> */}
 
                         <TableCell align="right">
-                          <UserMoreMenu />
+                          <DeleteIcon onClick={() => deleteUser(row.id)} />
                         </TableCell>
                       </TableRow>
-                    ); 
+                    );
                   })}
                   {emptyRows > 0 && (
                     <TableRow style={{ height: 53 * emptyRows }}>
