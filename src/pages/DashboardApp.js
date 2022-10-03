@@ -4,7 +4,10 @@ import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
 // components
 import { useTranslation } from 'react-i18next';
-import { useLocation } from "react-router-dom";
+import { useContext } from 'react';
+import { UserContext } from '../App';
+
+// import { useLocation } from "react-router-dom";
 
 import Page from '../components/Page';
 // import Iconify from '../components/Iconify';
@@ -25,18 +28,17 @@ import {
 // ----------------------------------------------------------------------
 
 export default function DashboardApp() {
+  const dataa = useContext(UserContext);
+
   const { t } = useTranslation();
 
   const theme = useTheme();
-
-  // const {id} = useLocation().state.id;
-  // console.log(`${id}`);
 
   return (
     <Page title="Dashboard">
       <Container maxWidth="xl">
         <Typography variant="h4" sx={{ mb: 5 }}>
-          {t('welcomeBack')}
+          {t('welcomeBack')} {dataa.firstname} {dataa.lastname}
         </Typography>
 
         <Grid container spacing={3}>

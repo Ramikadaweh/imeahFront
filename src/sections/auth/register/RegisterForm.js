@@ -27,9 +27,10 @@ export default function RegisterForm() {
       hpassword: Yup.string().required(t('pwdReq')),
     }),
     onSubmit: (values) => {
-      values.locale_code = window.navigator.language;
+      values.local_code = window.navigator.language;
+      values.role = 'User';
       axios
-        .post('http://a63b8a6ee7175471684500510268d66b-571633740.me-south-1.elb.amazonaws.com:5001/user/signup', values)
+        .post('http://localhost:5003/auth/signup', values)
         .then((response) => {
           console.log(response);
           if (response.status === 200 || response.status === 201) navigate('/login');

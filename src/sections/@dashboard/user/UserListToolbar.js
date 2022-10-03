@@ -35,7 +35,11 @@ UserListToolbar.propTypes = {
   onFilterName: PropTypes.func,
 };
 
-export default function UserListToolbar({ numSelected, filterName, onFilterName }) {
+export default function UserListToolbar({ numSelected, filterName, onFilterName, handledSearch }) {
+  const handleSearch = (e) => {
+    handledSearch(e.target.value);
+  };
+
   return (
     <RootStyle
       sx={{
@@ -51,14 +55,13 @@ export default function UserListToolbar({ numSelected, filterName, onFilterName 
         </Typography>
       ) : (
         <SearchStyle
-          value={filterName}
-          onChange={onFilterName}
+          onChange={handleSearch}
           placeholder="Search..."
-          startAdornment={
-            <InputAdornment position="start">
-              <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled', width: 20, height: 20 }} />
-            </InputAdornment>
-          }
+          // startAdornment={
+          //   <InputAdornment position="start">
+          //     <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled', width: 20, height: 20 }} />
+          //   </InputAdornment>
+          // }
         />
       )}
 

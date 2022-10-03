@@ -1,9 +1,10 @@
 import { filter } from 'lodash';
 // import { sentenceCase } from 'change-case';
 import { useEffect, useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+// import { Link as RouterLink } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
-
+// import AccountProfile from 'src/components/profile/account-profile';
+import { Link } from 'react-router-dom';
 // material
 import {
   Card,
@@ -34,13 +35,12 @@ import USERLIST from '../_mock/user';
 // import axios from 'axios';
 
 // ----------------------------------------------------------------------
-
 const TABLE_HEAD = [
   { id: 'firstname', label: 'First Name', alignRight: false },
   { id: 'lastname', label: 'Last Name', alignRight: false },
   { id: 'email', label: 'Email', alignRight: false },
-  // { id: 'isVerified', label: 'Verified', alignRight: false },
-  // { id: 'status', label: 'Status', alignRight: false },
+  { id: 'roleId', label: 'Role', alignRight: false },
+  // { id: 'roleId', label: 'Role', alignRight: true },
   { id: '' },
 ];
 
@@ -77,11 +77,12 @@ function applySortFilter(array, comparator, query) {
 
 export default function User() {
   const { t } = useTranslation();
+  const [error,setError] = useState("");
   const [user, setUser] = useState([]);
-
+  const [search, setSearch] = useState('');
   useEffect(() => {
     axios
-      .get('http://a63b8a6ee7175471684500510268d66b-571633740.me-south-1.elb.amazonaws.com:5001/users/all')
+      .get('http://localhost:5003/users/all')
       .then((response) => {
         const userData = response.data;
         console.log(userData);
@@ -90,15 +91,18 @@ export default function User() {
       .catch((err) => console.log(err));
   }, []);
 
+  const oneUser = (id) => {
+    axios.get(`http://localhost:5003/users/${id}`).then((response) => {
+      console.log(response.data);
+      if (response.status === 200 || response.status === 201) window.location.reload();
+    });
+  };
+
   const deleteUser = (id) => {
-    console.log(id);
-    axios
-      .delete(`http://a63b8a6ee7175471684500510268d66b-571633740.me-south-1.elb.amazonaws.com:5001/users/${id}`)
-      .then((response) => {
-        console.log(response.data);
-        if (response.status === 200 || response.status === 201) window.location.reload();
-      });
-   
+    axios.delete(`http://localhost:5003/users/${id}`).then((response) => {
+      console.log(response.data);
+      if (response.status === 200 || response.status === 201) window.location.reload()
+    }).catch((err) => console.log(err.response.data.message));  
   };
 
   const [page, setPage] = useState(0);
@@ -162,6 +166,17 @@ export default function User() {
 
   const isUserNotFound = filteredUsers.length === 0;
 
+  const filteredData = user.filter((el) => {
+    if (search === '') {
+      return el;
+    }
+    return el.firstname.toLowerCase().includes(search);
+  });
+
+  const handleSearch = (data) => {
+    setSearch(data.toLowerCase());
+  };
+
   return (
     <Page title="User">
       <Container>
@@ -169,13 +184,13 @@ export default function User() {
           <Typography variant="h4" gutterBottom>
             {t('user')}
           </Typography>
-          <Button variant="contained" component={RouterLink} to="#" startIcon={<Iconify icon="eva:plus-fill" />}>
+          {/* <Button variant="contained" component={RouterLink} to="#" startIcon={<Iconify icon="eva:plus-fill" />}>
             {t('newUsr')}
-          </Button>
+          </Button> */}
         </Stack>
 
         <Card>
-          <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
+          <UserListToolbar data={user} handledSearch={handleSearch} />
 
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
@@ -190,8 +205,8 @@ export default function User() {
                   onSelectAllClick={handleSelectAllClick}
                 />
                 <TableBody>
-                  {user.map((row) => {
-                    const { id, firstname, lastname, email } = row;
+                  {filteredData.map((row) => {
+                    const { id, firstname, lastname, email, role } = row;
                     const isItemSelected = selected.indexOf(firstname) !== -1;
 
                     return (
@@ -209,19 +224,20 @@ export default function User() {
                         <TableCell component="th" scope="row" padding="none" style={{ paddingLeft: '3%' }}>
                           <Stack direction="row" alignItems="center" spacing={2}>
                             {/* <Avatar alt={name} src={avatarUrl} /> */}
-                            <Typography variant="subtitle2" noWrap>
-                              {firstname}
-                            </Typography>
+                            <Link to="/dashboard/userprofile" state={{ idd: id }} style={{color:"black", textDecoration:"none"}}>
+                              <Typography variant="subtitle2" noWrap>
+                                {firstname}
+                              </Typography>
+                            </Link>
                           </Stack>
                         </TableCell>
                         <TableCell style={{ paddingLeft: '2.5%' }} align="left">
                           {lastname}
                         </TableCell>
                         <TableCell align="left">{email}</TableCell>
-                        {/* <TableCell align="left">
-                          <Label variant="ghost" color={(status === 'banned' && 'error') || 'success'}>
-                            {sentenceCase(status)}
-                          </Label>
+                        <TableCell align="left">{role}</TableCell>
+                        {/* <TableCell align="right">
+                            {roleId}
                         </TableCell> */}
 
                         <TableCell align="right">

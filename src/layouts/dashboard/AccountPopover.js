@@ -1,40 +1,49 @@
-import { useRef, useState ,useEffect} from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useRef, useState ,useEffect, useContext} from 'react';
+import { useNavigate } from 'react-router-dom';
 // @mui
 import { alpha } from '@mui/material/styles';
 import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton } from '@mui/material';
 // components
 import { useCookies } from 'react-cookie';
 
+
+import { UserContext } from '../../App';
+
 import MenuPopover from '../../components/MenuPopover';
 // mocks_
 
 import account from '../../_mock/account';
 
+
 // ----------------------------------------------------------------------
 
 const MENU_OPTIONS = [
-  {
-    label: 'Home',
-    icon: 'eva:home-fill',
-    linkTo: '/',
-  },
+  // {
+  //   label: 'Home',
+  //   icon: 'eva:home-fill',
+  //   linkTo: '/',
+  // },
   {
     label: 'Profile',
     icon: 'eva:person-fill',
     linkTo: '#',
   },
-  {
-    label: 'Settings',
-    icon: 'eva:settings-2-fill',
-    linkTo: '#',
-  },
+  // {
+  //   label: 'Settings',
+  //   icon: 'eva:settings-2-fill',
+  //   linkTo: '#',
+  // },
 ];
 
 // ----------------------------------------------------------------------
 
 export default function AccountPopover() {
+
+  const data = useContext(UserContext);
+
   const navigate = useNavigate();
+  // const history = useHistory();
+
 
   const [cookies, setCookie, removeCookie] = useCookies(['i18next']);
    useEffect(() => {
@@ -44,6 +53,11 @@ export default function AccountPopover() {
   const anchorRef = useRef(null);
 
   const [open, setOpen] = useState(null);
+
+  const openProf = () => {
+    setOpen(null)
+    navigate('/dashboard/profile');
+  };
 
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
@@ -101,10 +115,10 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {account.displayName}
+            {data.firstname} {data.lastname}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {account.email}
+            {data.email}
           </Typography>
         </Box>
 
@@ -112,7 +126,7 @@ export default function AccountPopover() {
 
         <Stack sx={{ p: 1 }}>
           {MENU_OPTIONS.map((option) => (
-            <MenuItem key={option.label} to={option.linkTo} component={RouterLink} onClick={handleClose}>
+            <MenuItem key={option.label} to={option.linkTo}  onClick={openProf}>
               {option.label}
             </MenuItem>
           ))}

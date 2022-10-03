@@ -10,18 +10,22 @@ import NotFound from './pages/Page404';
 import Register from './pages/Register';
 import Products from './pages/Products';
 import DashboardApp from './pages/DashboardApp';
-
+import ProfilePage from './pages/profilePage';
+import UserProfile from './components/profile/user-profile';
+import UserProfilePage from './pages/userProfilePage';
 // ----------------------------------------------------------------------
 
 export default function Router() {
   return useRoutes([
     {
-      path: '/dashboard',  element: localStorage.getItem('token') ? <DashboardLayout /> : <Navigate to="/" />,
+      path: '/dashboard',  element: localStorage.getItem('token') ? <DashboardLayout /> : <Navigate to="/login" />,
       children: [
         { path: 'app', element: <DashboardApp /> },
         { path: 'user', element: <User /> },
         { path: 'doctors', element: <Products /> },
         { path: 'hospitals', element: <Blog /> },
+        { path: 'profile', element: <ProfilePage /> },
+        { path: 'userprofile', element: <UserProfilePage /> },
       ],
     },
     {

@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 
-import { useEffect } from 'react';
+import {  useEffect, useContext } from "react";
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
 import { Box, Link, Drawer, Typography, Avatar } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { UserContext } from '../../App';
 import Iconify from '../../components/Iconify';
 
 // mock
@@ -48,6 +49,8 @@ DashboardSidebar.propTypes = {
 
 export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
 
+  const data = useContext(UserContext);
+
   const {t}=useTranslation();
   const { pathname } = useLocation();
 
@@ -77,7 +80,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
             <Avatar src={account.photoURL} alt="photoURL" />
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                {account.displayName}
+                {data.firstname} {data.lastname}
               </Typography>
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                 {account.role}

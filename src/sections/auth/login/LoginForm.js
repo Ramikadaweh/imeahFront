@@ -35,10 +35,10 @@ export default function LoginForm() {
     validationSchema: LoginSchema,
     onSubmit: () => {
       axios
-        .post('http://a63b8a6ee7175471684500510268d66b-571633740.me-south-1.elb.amazonaws.com:5001/user/login', values)
+        .post('http://localhost:5003/auth/signin', values)
         .then((response) => {
           console.log(response);
-          localStorage.setItem('token', response.data);
+          localStorage.setItem('token', response.data.access_token);
           if (response.status === 200 || response.status === 201) navigate('/dashboard/app');
         })
         .catch((error) => {
